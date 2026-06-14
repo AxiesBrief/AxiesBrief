@@ -49,6 +49,7 @@
             margin: 0 auto;
             padding: 1rem 1.2rem;
         }
+        /* header */
         .header {
             display: flex;
             flex-wrap: wrap;
@@ -109,6 +110,7 @@
             font-size: 0.75rem;
             opacity: 0.6;
         }
+        /* BIG GLOWING SUBSCRIBE BUTTON */
         .alert-btn {
             background: linear-gradient(135deg, #1a5d8c, #0e3a5c);
             border: none;
@@ -159,6 +161,7 @@
             0% { opacity: 0.3; transform: scale(0.8);}
             100% { opacity: 1; transform: scale(1);}
         }
+        /* stats row: only total and saved */
         .stats-grid {
             display: flex;
             flex-wrap: wrap;
@@ -187,6 +190,7 @@
             color: var(--text-primary);
             line-height: 1.2;
         }
+        /* filter bar - scrollable on mobile */
         .filter-bar {
             background: var(--surface);
             border: 1px solid var(--border-light);
@@ -239,6 +243,7 @@
             margin-left: auto;
             white-space: nowrap;
         }
+        /* news grid - responsive */
         .news-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -408,6 +413,7 @@
             pointer-events: none;
         }
         .toast.show { opacity: 1; }
+        /* popup without "later" option */
         .popup-overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -491,8 +497,9 @@
 <div id="subscribePopup" class="popup-overlay"><div class="popup-card"><h3>🔔 Never miss an update</h3><p>Get push alerts for breaking defence, geopolitical & economic news — real‑time.</p><button id="popupAllowBtn" class="popup-btn">Enable notifications</button></div></div>
 
 <script>
-    // ======================== 140+ RSS SOURCES ========================
+    // ======================== 140+ RSS SOURCES (all regions, no names shown) ========================
     const SOURCES = [
+        // Africa (30+)
         { url: "https://www.aljazeera.com/xml/rss/africa.xml", region: "africa" },
         { url: "https://www.bbc.com/news/world/africa/rss.xml", region: "africa" },
         { url: "https://www.france24.com/en/africa/rss", region: "africa" },
@@ -509,6 +516,7 @@
         { url: "https://www.rfi.fr/en/africa/rss", region: "africa" },
         { url: "https://www.theeastafrican.co.ke/rss", region: "africa" },
         { url: "https://www.nation.africa/feeds/rss", region: "africa" },
+        // Americas (US, Canada, LatAm)
         { url: "https://www.reutersagency.com/feed/?best-topics=us", region: "americas" },
         { url: "https://feeds.npr.org/1001/rss.xml", region: "americas" },
         { url: "https://www.cnn.com/world/rss.xml", region: "americas" },
@@ -523,6 +531,7 @@
         { url: "https://www.france24.com/en/americas/rss", region: "americas" },
         { url: "https://www.dw.com/en/latin-america/rss", region: "americas" },
         { url: "https://www.clarin.com/rss/", region: "americas" },
+        // Europe
         { url: "http://feeds.bbci.co.uk/news/world/europe/rss.xml", region: "europe" },
         { url: "https://www.theguardian.com/world/europe-news/rss", region: "europe" },
         { url: "https://www.dw.com/en/rss", region: "europe" },
@@ -535,6 +544,7 @@
         { url: "https://www.economist.com/feed", region: "europe" },
         { url: "https://www.rferl.org/rss/rferlnews", region: "europe" },
         { url: "https://www.balkaninsight.com/feed/", region: "europe" },
+        // Middle East
         { url: "https://www.aljazeera.com/xml/rss/all.xml", region: "middleeast" },
         { url: "https://www.arabnews.com/rss.xml", region: "middleeast" },
         { url: "https://english.aawsat.com/rss.xml", region: "middleeast" },
@@ -547,6 +557,7 @@
         { url: "https://www.france24.com/en/middle-east/rss", region: "middleeast" },
         { url: "https://www.voanews.com/api/feed/middle-east", region: "middleeast" },
         { url: "https://www.trtworld.com/middle-east/feed", region: "middleeast" },
+        // Asia-Pacific (incl. India, China, Japan, SE Asia)
         { url: "https://www.scmp.com/rss/91/feed", region: "asia" },
         { url: "https://www.channelnewsasia.com/rss/news", region: "asia" },
         { url: "https://www.japantimes.co.jp/feed/", region: "asia" },
@@ -563,6 +574,7 @@
         { url: "https://www.dw.com/en/asia/rss", region: "asia" },
         { url: "https://www.voanews.com/api/feed/asia", region: "asia" },
         { url: "https://www.aa.com.tr/en/asia-pacific/rss-default", region: "asia" },
+        // Global / Defence / cross-region
         { url: "https://www.reutersagency.com/feed/?best-topics=world", region: "other" },
         { url: "http://feeds.bbci.co.uk/news/world/rss.xml", region: "other" },
         { url: "https://www.theguardian.com/world/rss", region: "other" },
@@ -779,6 +791,7 @@
     function escapeHtml(str) { if(!str) return ''; return str.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[m])); }
     function showToast(msg) { const t = document.getElementById("toastMsg"); t.innerText = msg; t.classList.add("show"); setTimeout(()=>t.classList.remove("show"), 2000); }
 
+    // UI builders
     function buildRegionUI() {
         const regions = [{val:"all",label:"🌍 All"},{val:"africa",label:"🌍 Africa"},{val:"americas",label:"🌎 Americas"},{val:"europe",label:"🇪🇺 Europe"},{val:"middleeast",label:"🕌 Middle East"},{val:"asia",label:"🌏 Asia"},{val:"other",label:"🌐 Global"}];
         const container = document.getElementById("regionChips");
@@ -798,6 +811,7 @@
         container.querySelectorAll(".chip").forEach(ch => ch.addEventListener("click", () => { activeSort = ch.getAttribute("data-sort"); buildSortUI(); renderFeed(); }));
     }
 
+    // Notification with popup (no "later" option)
     let popupShown = false;
     async function requestNotification(showMsg = true) {
         if (!("Notification" in window)) { if(showMsg) showToast("Push not supported"); return false; }
@@ -817,6 +831,7 @@
         document.getElementById("popupAllowBtn").onclick = async () => { overlay.classList.remove("show"); await requestNotification(true); };
     }
 
+    // Tabs & events
     document.querySelectorAll("[data-tab]").forEach(tab => {
         tab.addEventListener("click", () => {
             const target = tab.getAttribute("data-tab");
@@ -834,15 +849,6 @@
     buildRegionUI(); buildCategoryUI(); buildSortUI();
     refreshAll().then(() => setTimeout(showSubscribePopup, 800));
     setInterval(refreshAll, 10 * 60 * 1000);
-</script>
-
-<!-- Monetag Service Worker Registration -->
-<script>
-if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/sw.js')
-        .then(reg => console.log('✅ Monetag Service Worker registered', reg))
-        .catch(err => console.error('❌ SW registration failed', err));
-}
 </script>
 </body>
 </html>
