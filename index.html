@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
+    <title>AxiesBrief · Global Intelligence Hub</title>
+    <meta name="description" content="Real‑time news from 140+ sources across Africa, Americas, Europe, Asia, Middle East. Defence, geopolitics, economy.">
+    
+    <!-- Monetag push placeholder — paste your Monetag script here -->
+    <!-- <script src="https://your-monetag-push-sdk.js"></script> -->
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+        body {
+            background: #f6f9fe;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            color: #0a2a44;
+            line-height: 1.5;
+            overflow-x: hidden;
+        }
+        :root {
+            --bg: #f6f9fe;
+            --surface: #ffffff;
+            --border-light: #e8edf3;
+            --border-med: #dfe4ec;
+            --text-primary: #1e3a5f;
+            --text-secondary: #5a6e8a;
+            --text-muted: #8a9bb0;
+            --accent: #1a5d8c;
+            --accent-soft: #eef3fc;
+            --positive: #1e7b48;
+            --negative: #c2412c;
+            --impact-critical: #b91c1c;
+            --impact-high: #d97706;
+            --impact-medium: #2b6e9f;
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.03), 0 1px 3px rgba(0, 0, 0, 0.04);
+            --shadow-md: 0 6px 14px rgba(0, 0, 0, 0.05);
+            --radius-card: 18px;
+            --radius-element: 12px;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1rem 1.2rem;
+        }
+        /* header */
+        .header {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.8rem;
+            margin-bottom: 1.2rem;
+            padding-bottom: 0.6rem;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .logo h1 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: -0.3px;
+            background: linear-gradient(135deg, #1c4e70, #0f3a58);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+        .logo p {
+            font-size: 0.65rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-top: 2px;
+        }
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            flex-wrap: wrap;
+        }
+        .search-box {
+            position: relative;
+            flex: 1;
+            min-width: 160px;
+        }
+        .search-box input {
+            background: var(--surface);
+            border: 1px solid var(--border-med);
+            border-radius: 40px;
+            padding: 0.45rem 1rem 0.45rem 2rem;
+            font-size: 0.75rem;
+            width: 100%;
+            font-family: inherit;
+            transition: 0.2s;
+        }
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 2px rgba(26,93,140,0.1);
+        }
+        .search-box::before {
+            content: "🔍";
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 0.75rem;
+            opacity: 0.6;
+        }
+        /* BIG GLOWING SUBSCRIBE BUTTON */
+        .alert-btn {
+            background: linear-gradient(135deg, #1a5d8c, #0e3a5c);
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 60px;
+            font-weight: 700;
+            font-size: 0.8rem;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            box-shadow: 0 0 10px rgba(26, 93, 140, 0.5);
+            animation: pulse-glow 1.8s infinite;
+            white-space: nowrap;
+        }
+        .alert-btn:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 18px rgba(26, 93, 140, 0.8);
+        }
+        @keyframes pulse-glow {
+            0% { box-shadow: 0 0 0 0 rgba(26, 93, 140, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(26, 93, 140, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(26, 93, 140, 0); }
+        }
+        .live-badge {
+            background: #eef6ef;
+            border: 1px solid #c8e6d9;
+            padding: 0.2rem 0.6rem;
+            border-radius: 40px;
+            font-size: 0.65rem;
+            font-weight: 600;
+            color: var(--positive);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            white-space: nowrap;
+        }
+        .live-dot {
+            width: 6px;
+            height: 6px;
+            background: var(--positive);
+            border-radius: 50%;
+            animation: pulse 1.2s infinite;
+        }
+        @keyframes pulse {
+            0% { opacity: 0.3; transform: scale(0.8);}
+            100% { opacity: 1; transform: scale(1);}
+        }
+        /* stats row: only total and saved */
+        .stats-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin-bottom: 1.2rem;
+        }
+        .stat-card {
+            background: var(--surface);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-element);
+            padding: 0.5rem 1rem;
+            flex: 1;
+            min-width: 100px;
+            box-shadow: var(--shadow-sm);
+        }
+        .stat-label {
+            font-size: 0.65rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            letter-spacing: 0.4px;
+        }
+        .stat-number {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            line-height: 1.2;
+        }
+        /* filter bar - scrollable on mobile */
+        .filter-bar {
+            background: var(--surface);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-element);
+            padding: 0.6rem 1rem;
+            margin-bottom: 1.2rem;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.8rem;
+        }
+        .filter-group {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+        .filter-label {
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+        }
+        .chip {
+            background: transparent;
+            border: 1px solid var(--border-med);
+            padding: 0.2rem 0.7rem;
+            border-radius: 30px;
+            font-size: 0.65rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.15s;
+            color: var(--text-secondary);
+            white-space: nowrap;
+        }
+        .chip.active {
+            background: var(--accent-soft);
+            border-color: #bed0e2;
+            color: var(--accent);
+            font-weight: 600;
+        }
+        .refresh-button {
+            background: var(--surface);
+            border: 1px solid var(--border-med);
+            padding: 0.25rem 0.8rem;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            font-weight: 500;
+            cursor: pointer;
+            margin-left: auto;
+            white-space: nowrap;
+        }
+        /* news grid - responsive */
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1rem;
+        }
+        .news-card {
+            background: var(--surface);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-card);
+            padding: 0.9rem;
+            transition: all 0.2s ease;
+            box-shadow: var(--shadow-sm);
+        }
+        .news-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+            border-color: #d0dbe8;
+        }
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 6px;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+        .tag-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+        }
+        .tag {
+            font-size: 0.55rem;
+            font-weight: 600;
+            padding: 2px 6px;
+            border-radius: 30px;
+            background: #f0f4fa;
+            color: #2b5f8a;
+        }
+        .region-badge {
+            font-size: 0.55rem;
+            font-weight: 600;
+            padding: 2px 6px;
+            border-radius: 30px;
+            background: #eaf1fb;
+            color: #2c6280;
+        }
+        .impact-badge {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+            font-size: 0.65rem;
+            padding: 2px 6px;
+            border-radius: 20px;
+            background: #f3f5f8;
+        }
+        .impact-critical { background: #fee9e7; color: var(--impact-critical); }
+        .impact-high { background: #fff1e0; color: var(--impact-high); }
+        .impact-medium { background: #e8f0f7; color: var(--impact-medium); }
+        .impact-low { background: #eff2f6; color: var(--text-muted); }
+        .sentiment {
+            font-size: 0.55rem;
+            font-weight: 700;
+            padding: 2px 6px;
+            border-radius: 30px;
+            display: inline-block;
+            margin-bottom: 6px;
+        }
+        .sent-positive { background: #e3f5ea; color: var(--positive);}
+        .sent-negative { background: #ffe6e2; color: var(--negative);}
+        .sent-neutral { background: #eff2f6; color: var(--text-secondary);}
+        .article-title {
+            font-size: 0.9rem;
+            font-weight: 700;
+            line-height: 1.35;
+            margin: 0.4rem 0 0.3rem;
+        }
+        .article-title a {
+            text-decoration: none;
+            color: var(--text-primary);
+        }
+        .article-title a:hover {
+            color: var(--accent);
+        }
+        .summary {
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            margin-bottom: 0.6rem;
+        }
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid var(--border-light);
+            padding-top: 0.5rem;
+            font-size: 0.65rem;
+            color: var(--text-muted);
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        .readmore-link {
+            font-weight: 600;
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 0.65rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
+        }
+        .readmore-link:hover { text-decoration: underline; }
+        .save-btn {
+            background: none;
+            border: 1px solid var(--border-med);
+            border-radius: 6px;
+            padding: 2px 8px;
+            font-size: 0.65rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.1s;
+            color: var(--text-secondary);
+        }
+        .save-btn.active {
+            background: #fff7e5;
+            border-color: #e2bc6b;
+            color: #b5760a;
+        }
+        .empty-state {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-muted);
+            grid-column: 1 / -1;
+        }
+        .loader {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            padding: 2rem;
+            grid-column: 1/-1;
+        }
+        .spinner {
+            width: 24px;
+            height: 24px;
+            border: 2px solid var(--border-med);
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: spin 0.7s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .page { display: none; }
+        .page.active-page { display: block; }
+        .toast {
+            position: fixed;
+            bottom: 15px;
+            right: 15px;
+            background: #1c2e3f;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 40px;
+            font-size: 0.75rem;
+            z-index: 1100;
+            opacity: 0;
+            transition: 0.2s;
+            pointer-events: none;
+        }
+        .toast.show { opacity: 1; }
+        /* popup without "later" option */
+        .popup-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(4px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            visibility: hidden;
+            opacity: 0;
+            transition: 0.2s;
+        }
+        .popup-overlay.show {
+            visibility: visible;
+            opacity: 1;
+        }
+        .popup-card {
+            background: white;
+            max-width: 340px;
+            width: 85%;
+            border-radius: 28px;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 20px 30px rgba(0,0,0,0.2);
+        }
+        .popup-card h3 { font-size: 1.2rem; margin-bottom: 0.4rem; }
+        .popup-card p { font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 1.2rem; }
+        .popup-btn {
+            background: var(--accent);
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 60px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: white;
+            width: 100%;
+            cursor: pointer;
+        }
+        @media (max-width: 640px) {
+            .container { padding: 0.8rem 1rem; }
+            .filter-bar { flex-direction: column; align-items: stretch; }
+            .refresh-button { margin-left: 0; align-self: flex-start; }
+            .filter-group { overflow-x: auto; padding-bottom: 4px; flex-wrap: nowrap; -webkit-overflow-scrolling: touch; }
+            .filter-group::-webkit-scrollbar { display: none; }
+            .stats-grid { gap: 0.6rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <div class="logo"><h1>AXIES<span style="font-weight:400">BRIEF</span></h1><p>global intelligence · 140+ sources</p></div>
+        <div class="header-actions">
+            <div class="search-box"><input type="text" id="searchInput" placeholder="Search briefs..."></div>
+            <button class="alert-btn" id="pushSubBtn">🔔 Subscribe</button>
+            <div class="live-badge"><span class="live-dot"></span> LIVE</div>
+        </div>
+    </div>
+
+    <div class="stats-grid">
+        <div class="stat-card"><div class="stat-label">Total briefs</div><div class="stat-number" id="totalCount">0</div></div>
+        <div class="stat-card"><div class="stat-label">Saved articles</div><div class="stat-number" id="savedStat">0</div></div>
+    </div>
+
+    <div class="filter-bar">
+        <div class="filter-group"><span class="filter-label">VIEW</span>
+            <span class="chip active" data-tab="feed">📰 Briefing</span>
+            <span class="chip" data-tab="saved">🔖 Saved</span>
+        </div>
+        <div class="filter-group"><span class="filter-label">REGION</span><div id="regionChips" style="display:flex; gap:5px; flex-wrap:wrap;"></div></div>
+        <div class="filter-group"><span class="filter-label">CATEGORY</span><div id="categoryChips" style="display:flex; gap:5px; flex-wrap:wrap;"></div></div>
+        <div class="filter-group"><span class="filter-label">SORT</span><div id="sortChips" style="display:flex; gap:5px; flex-wrap:wrap;"></div></div>
+        <button class="refresh-button" id="refreshBtn">↻ Refresh</button>
+    </div>
+
+    <div id="feedPage" class="page active-page"><div id="newsGrid" class="news-grid"><div class="loader"><div class="spinner"></div><span>Loading 140+ global sources...</span></div></div></div>
+    <div id="savedPage" class="page"><div id="savedGrid" class="news-grid"></div></div>
+</div>
+<div id="toastMsg" class="toast"></div>
+<div id="subscribePopup" class="popup-overlay"><div class="popup-card"><h3>🔔 Never miss an update</h3><p>Get push alerts for breaking defence, geopolitical & economic news — real‑time.</p><button id="popupAllowBtn" class="popup-btn">Enable notifications</button></div></div>
+
+<script>
+    // ======================== 140+ RSS SOURCES (all regions, no names shown) ========================
+    const SOURCES = [
+        // Africa (30+)
+        { url: "https://www.aljazeera.com/xml/rss/africa.xml", region: "africa" },
+        { url: "https://www.bbc.com/news/world/africa/rss.xml", region: "africa" },
+        { url: "https://www.france24.com/en/africa/rss", region: "africa" },
+        { url: "https://www.dw.com/en/africa/rss", region: "africa" },
+        { url: "https://mg.co.za/feed/", region: "africa" },
+        { url: "https://www.news24.com/feeds/24/africa", region: "africa" },
+        { url: "https://allafrica.com/tools/headlines/rss/africa/headlines.rss", region: "africa" },
+        { url: "https://www.africanews.com/feed/", region: "africa" },
+        { url: "https://www.voanews.com/api/feed/africa", region: "africa" },
+        { url: "https://www.trtworld.com/africa/feed", region: "africa" },
+        { url: "https://www.aa.com.tr/en/africa/rss-default", region: "africa" },
+        { url: "https://www.enca.com/rss", region: "africa" },
+        { url: "https://www.sabcnews.com/feed/", region: "africa" },
+        { url: "https://www.rfi.fr/en/africa/rss", region: "africa" },
+        { url: "https://www.theeastafrican.co.ke/rss", region: "africa" },
+        { url: "https://www.nation.africa/feeds/rss", region: "africa" },
+        // Americas (US, Canada, LatAm)
+        { url: "https://www.reutersagency.com/feed/?best-topics=us", region: "americas" },
+        { url: "https://feeds.npr.org/1001/rss.xml", region: "americas" },
+        { url: "https://www.cnn.com/world/rss.xml", region: "americas" },
+        { url: "https://www.voanews.com/api/feed/rss", region: "americas" },
+        { url: "https://foreignpolicy.com/feed/", region: "americas" },
+        { url: "https://www.cfr.org/rss/feed", region: "americas" },
+        { url: "https://www.washingtonpost.com/news/world/rss/", region: "americas" },
+        { url: "https://www.nytimes.com/section/world/rss.xml", region: "americas" },
+        { url: "https://www.wsj.com/news/world/rss", region: "americas" },
+        { url: "https://www.theglobeandmail.com/feed/", region: "americas" },
+        { url: "https://www.cbc.ca/rss/cpolitics", region: "americas" },
+        { url: "https://www.france24.com/en/americas/rss", region: "americas" },
+        { url: "https://www.dw.com/en/latin-america/rss", region: "americas" },
+        { url: "https://www.clarin.com/rss/", region: "americas" },
+        // Europe
+        { url: "http://feeds.bbci.co.uk/news/world/europe/rss.xml", region: "europe" },
+        { url: "https://www.theguardian.com/world/europe-news/rss", region: "europe" },
+        { url: "https://www.dw.com/en/rss", region: "europe" },
+        { url: "https://www.france24.com/en/europe/rss", region: "europe" },
+        { url: "https://www.euronews.com/rss", region: "europe" },
+        { url: "https://www.politico.eu/feed/", region: "europe" },
+        { url: "https://www.lemonde.fr/europe/rss_full.xml", region: "europe" },
+        { url: "https://www.spiegel.de/international/index.rss", region: "europe" },
+        { url: "https://www.ft.com/world-europe?format=rss", region: "europe" },
+        { url: "https://www.economist.com/feed", region: "europe" },
+        { url: "https://www.rferl.org/rss/rferlnews", region: "europe" },
+        { url: "https://www.balkaninsight.com/feed/", region: "europe" },
+        // Middle East
+        { url: "https://www.aljazeera.com/xml/rss/all.xml", region: "middleeast" },
+        { url: "https://www.arabnews.com/rss.xml", region: "middleeast" },
+        { url: "https://english.aawsat.com/rss.xml", region: "middleeast" },
+        { url: "https://www.timesofisrael.com/feed/", region: "middleeast" },
+        { url: "https://www.haaretz.com/feed/", region: "middleeast" },
+        { url: "https://www.jpost.com/Rss/RssFeedsHeadlines.aspx", region: "middleeast" },
+        { url: "https://www.dailysabah.com/rssFeed/", region: "middleeast" },
+        { url: "https://www.tehrantimes.com/rss", region: "middleeast" },
+        { url: "https://www.bbc.com/news/world/middle_east/rss.xml", region: "middleeast" },
+        { url: "https://www.france24.com/en/middle-east/rss", region: "middleeast" },
+        { url: "https://www.voanews.com/api/feed/middle-east", region: "middleeast" },
+        { url: "https://www.trtworld.com/middle-east/feed", region: "middleeast" },
+        // Asia-Pacific (incl. India, China, Japan, SE Asia)
+        { url: "https://www.scmp.com/rss/91/feed", region: "asia" },
+        { url: "https://www.channelnewsasia.com/rss/news", region: "asia" },
+        { url: "https://www.japantimes.co.jp/feed/", region: "asia" },
+        { url: "https://www.thehindu.com/news/national/?service=rss", region: "asia" },
+        { url: "https://indianexpress.com/feed/", region: "asia" },
+        { url: "https://economictimes.indiatimes.com/rssfeedstopstories.cms", region: "asia" },
+        { url: "https://theprint.in/feed/", region: "asia" },
+        { url: "https://timesofindia.indiatimes.com/rssfeedstopstories.cms", region: "asia" },
+        { url: "https://www.straitstimes.com/feed", region: "asia" },
+        { url: "https://www.nst.com.my/rss/latest", region: "asia" },
+        { url: "https://www.philstar.com/rss", region: "asia" },
+        { url: "https://www.bbc.com/news/world/asia/rss.xml", region: "asia" },
+        { url: "https://www.aljazeera.com/xml/rss/asia.xml", region: "asia" },
+        { url: "https://www.dw.com/en/asia/rss", region: "asia" },
+        { url: "https://www.voanews.com/api/feed/asia", region: "asia" },
+        { url: "https://www.aa.com.tr/en/asia-pacific/rss-default", region: "asia" },
+        // Global / Defence / cross-region
+        { url: "https://www.reutersagency.com/feed/?best-topics=world", region: "other" },
+        { url: "http://feeds.bbci.co.uk/news/world/rss.xml", region: "other" },
+        { url: "https://www.theguardian.com/world/rss", region: "other" },
+        { url: "https://defensenews.com/feed/", region: "other" },
+        { url: "https://www.livefistdefence.com/feed/", region: "other" },
+        { url: "https://idrw.org/feed/", region: "other" },
+        { url: "https://www.spacewar.com/rssfeeds.php", region: "other" },
+        { url: "https://www.defenseworld.net/feed/", region: "other" },
+        { url: "https://www.janes.com/feed", region: "other" }
+    ];
+
+    let allArticles = [], savedArticles = [];
+    try { const savedRaw = localStorage.getItem("axiesbrief_saved"); if (savedRaw) savedArticles = JSON.parse(savedRaw); } catch(e) {}
+
+    let activeRegion = "all", activeCategory = "all", activeSort = "date";
+
+    const CATEGORY_KEYWORDS = {
+        defence: ["defence","defense","military","army","navy","air force","missile","drone","weapon","submarine","border","conflict","war","combat","arsenal","tank"],
+        geopolitics: ["diplomacy","summit","nato","eu","brics","quad","foreign policy","sanctions","alliance","united nations","bilateral","treaty","china","russia","ukraine","gaza","israel","iran","geopolitical","ambassador"],
+        economy: ["economy","gdp","inflation","market","trade","recession","stock","budget","growth","fiscal","deficit","finance","tax","revenue","currency"],
+        technology: ["ai","chip","semiconductor","space","satellite","quantum","5g","cyber","startup","tech","innovation","isro","nasa","spacex","digital"],
+        conflict: ["war","attack","strike","casualties","ceasefire","invasion","bombing","missile strike","terror","militant","violence","offensive"],
+        health: ["health","pandemic","vaccine","disease","covid","hospital","medicine","healthcare","outbreak","virus"]
+    };
+
+    function classifyArticle(title, summary) {
+        const text = (title + " " + (summary || "")).toLowerCase();
+        const matched = new Set();
+        for (const [cat, keywords] of Object.entries(CATEGORY_KEYWORDS))
+            if (keywords.some(kw => text.includes(kw))) matched.add(cat);
+        if (matched.size === 0) matched.add("geopolitics");
+        return Array.from(matched);
+    }
+
+    function calculateImpact(title, summary, tags) {
+        const text = (title + " " + summary).toLowerCase();
+        let score = 3;
+        if (text.includes("war") || text.includes("attack") || text.includes("crisis") || text.includes("missile")) score += 3;
+        if (text.includes("casualty") || text.includes("killed") || text.includes("strike") || text.includes("dead")) score += 2;
+        if (text.includes("summit") || text.includes("deal") || text.includes("breakthrough")) score += 1;
+        if (tags.includes("conflict") || tags.includes("defence")) score += 1;
+        return Math.min(10, Math.max(1, score));
+    }
+
+    function getSentiment(title, summary) {
+        const text = (title + " " + summary).toLowerCase();
+        const posWords = ["growth","record","boost","success","agreement","deal","positive","win","breakthrough","launch","surge","alliance"];
+        const negWords = ["crisis","crash","attack","kill","death","war","conflict","collapse","threat","sanction","downgrade","violence","strike","casualty","hostile"];
+        let pos = posWords.filter(w => text.includes(w)).length;
+        let neg = negWords.filter(w => text.includes(w)).length;
+        if (pos > neg) return "positive";
+        if (neg > pos) return "negative";
+        return "neutral";
+    }
+
+    function getRegionLabel(r) {
+        const map = { africa:"🌍 Africa", americas:"🌎 Americas", europe:"🇪🇺 Europe", middleeast:"🕌 Middle East", asia:"🌏 Asia", other:"🌐 Global" };
+        return map[r] || "🌐 World";
+    }
+
+    const PROXIES = [
+        url => `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,
+        url => `https://corsproxy.io/?${encodeURIComponent(url)}`,
+        url => `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(url)}`
+    ];
+
+    async function fetchSource(source) {
+        for (const proxyBuilder of PROXIES) {
+            try {
+                const proxyUrl = proxyBuilder(source.url);
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 8000);
+                const resp = await fetch(proxyUrl, { signal: controller.signal });
+                clearTimeout(timeoutId);
+                if (!resp.ok) continue;
+                let raw = await resp.text();
+                if (proxyUrl.includes("rss2json.com") && raw.includes('"items"')) {
+                    const json = JSON.parse(raw);
+                    if (json.items && json.items.length) {
+                        const items = json.items.map(item => ({ title: item.title, link: item.link, description: item.description, pubDate: item.pubDate ? new Date(item.pubDate) : new Date() }));
+                        return itemsToArticles(items, source.region);
+                    }
+                    continue;
+                }
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(raw, "text/xml");
+                if (doc.querySelector("parsererror")) continue;
+                let rssItems = doc.querySelectorAll("item");
+                if (!rssItems.length) rssItems = doc.querySelectorAll("entry");
+                if (!rssItems.length) continue;
+                const items = [];
+                for (let i = 0; i < Math.min(rssItems.length, 10); i++) {
+                    const get = (sel) => rssItems[i].querySelector(sel)?.textContent?.trim() || "";
+                    const title = get("title");
+                    if (!title) continue;
+                    const link = get("link");
+                    const desc = (get("description") || get("summary") || "").replace(/<[^>]*>/g, "").slice(0, 450);
+                    const pubRaw = get("pubDate") || get("published");
+                    const pubDate = pubRaw ? new Date(pubRaw) : new Date();
+                    items.push({ title, link: link || "#", description: desc, pubDate });
+                }
+                return itemsToArticles(items, source.region);
+            } catch(e) { continue; }
+        }
+        return [];
+    }
+
+    function itemsToArticles(items, regionCode) {
+        return items.filter(it => it.title && it.title.length > 5).map(it => {
+            const tags = classifyArticle(it.title, it.description);
+            return {
+                id: btoa(it.title.slice(0, 45) + regionCode).replace(/[^a-zA-Z0-9]/g, "").slice(0, 22),
+                title: it.title,
+                link: it.link,
+                summary: it.description || "Read full briefing",
+                tags: tags,
+                impact: calculateImpact(it.title, it.description, tags),
+                sentiment: getSentiment(it.title, it.description),
+                region: regionCode,
+                regionLabel: getRegionLabel(regionCode),
+                pubDate: it.pubDate instanceof Date ? it.pubDate : new Date()
+            };
+        });
+    }
+
+    async function refreshAll() {
+        const grid = document.getElementById("newsGrid");
+        grid.innerHTML = `<div class="loader"><div class="spinner"></div><span>Pulling from 140+ sources...</span></div>`;
+        const results = await Promise.allSettled(SOURCES.map(src => fetchSource(src)));
+        let combined = [];
+        for (const res of results) if (res.status === "fulfilled") combined.push(...res.value);
+        const seen = new Set();
+        const unique = combined.filter(art => { const key = art.title.toLowerCase().trim(); if (seen.has(key)) return false; seen.add(key); return true; });
+        allArticles = unique.sort((a,b) => b.pubDate - a.pubDate);
+        document.getElementById("totalCount").innerText = allArticles.length;
+        document.getElementById("savedStat").innerText = savedArticles.length;
+        renderFeed(); renderSavedPage();
+    }
+
+    function filterAndSort() {
+        let filtered = [...allArticles];
+        if (activeRegion !== "all") filtered = filtered.filter(a => a.region === activeRegion);
+        if (activeCategory !== "all") filtered = filtered.filter(a => a.tags.includes(activeCategory));
+        const searchTerm = document.getElementById("searchInput")?.value.toLowerCase() || "";
+        if (searchTerm) filtered = filtered.filter(a => a.title.toLowerCase().includes(searchTerm) || a.summary.toLowerCase().includes(searchTerm));
+        if (activeSort === "impact") filtered.sort((a,b) => b.impact - a.impact);
+        else if (activeSort === "positive") filtered.sort((a,b) => (b.sentiment === "positive" ? 1 : 0) - (a.sentiment === "positive" ? 1 : 0));
+        else if (activeSort === "negative") filtered.sort((a,b) => (b.sentiment === "negative" ? 1 : 0) - (a.sentiment === "negative" ? 1 : 0));
+        else filtered.sort((a,b) => b.pubDate - a.pubDate);
+        return filtered;
+    }
+
+    function isSaved(art) { return savedArticles.some(s => s.id === art.id); }
+    function toggleSave(article) {
+        if (isSaved(article)) savedArticles = savedArticles.filter(s => s.id !== article.id);
+        else savedArticles.push(article);
+        localStorage.setItem("axiesbrief_saved", JSON.stringify(savedArticles));
+        document.getElementById("savedStat").innerText = savedArticles.length;
+        renderFeed(); renderSavedPage();
+        showToast(isSaved(article) ? "Removed from saved" : "Article saved ✓");
+    }
+
+    function renderFeed() {
+        const filtered = filterAndSort();
+        const container = document.getElementById("newsGrid");
+        if (!filtered.length) { container.innerHTML = `<div class="empty-state">📭 No briefings match filters.</div>`; return; }
+        container.innerHTML = filtered.map(art => `
+            <div class="news-card">
+                <div class="card-header">
+                    <div class="tag-group">
+                        ${art.tags.slice(0,2).map(t => `<span class="tag">${t}</span>`).join("")}
+                        <span class="region-badge">${art.regionLabel}</span>
+                    </div>
+                    <div class="impact-badge impact-${art.impact >= 8 ? 'critical' : art.impact >= 6 ? 'high' : art.impact >= 4 ? 'medium' : 'low'}">⚡ ${art.impact}/10</div>
+                </div>
+                <div><span class="sentiment sent-${art.sentiment}">${art.sentiment}</span></div>
+                <div class="article-title"><a href="${art.link}" target="_blank" rel="noopener">${escapeHtml(art.title)}</a></div>
+                <div class="summary">${escapeHtml(art.summary.substring(0, 120))}${art.summary.length > 120 ? '...' : ''}</div>
+                <div class="card-footer">
+                    <div><span>📅 ${formatDate(art.pubDate)}</span> <a href="${art.link}" target="_blank" class="readmore-link">Read more →</a></div>
+                    <button class="save-btn ${isSaved(art) ? 'active' : ''}" data-id="${art.id}">${isSaved(art) ? '★ Saved' : '☆ Save'}</button>
+                </div>
+            </div>
+        `).join("");
+        document.querySelectorAll(".save-btn").forEach(btn => {
+            const id = btn.getAttribute("data-id");
+            const article = filtered.find(a => a.id === id);
+            if (article) btn.onclick = (e) => { e.stopPropagation(); toggleSave(article); };
+        });
+    }
+
+    function renderSavedPage() {
+        const container = document.getElementById("savedGrid");
+        if (!savedArticles.length) { container.innerHTML = `<div class="empty-state">🔖 No saved articles. Click ☆ on any briefing.</div>`; return; }
+        container.innerHTML = savedArticles.map(art => `
+            <div class="news-card">
+                <div class="tag-group">${art.tags.slice(0,2).map(t => `<span class="tag">${t}</span>`).join("")}<span class="region-badge">${art.regionLabel}</span></div>
+                <div class="article-title"><a href="${art.link}" target="_blank">${escapeHtml(art.title)}</a></div>
+                <div class="summary">${escapeHtml(art.summary.substring(0,100))}...</div>
+                <div class="card-footer">
+                    <div><span>⚡ Impact ${art.impact}/10</span> <a href="${art.link}" target="_blank" class="readmore-link">Read more →</a></div>
+                    <button class="save-btn active" data-id="${art.id}">★ Remove</button>
+                </div>
+            </div>
+        `).join("");
+        container.querySelectorAll(".save-btn").forEach(btn => {
+            const id = btn.getAttribute("data-id");
+            const article = savedArticles.find(a => a.id === id);
+            if (article) btn.onclick = () => toggleSave(article);
+        });
+    }
+
+    function formatDate(d) { if (!d || isNaN(d.getTime())) return "recent"; return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', hour:'2-digit', minute:'2-digit' }); }
+    function escapeHtml(str) { if(!str) return ''; return str.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[m])); }
+    function showToast(msg) { const t = document.getElementById("toastMsg"); t.innerText = msg; t.classList.add("show"); setTimeout(()=>t.classList.remove("show"), 2000); }
+
+    // UI builders
+    function buildRegionUI() {
+        const regions = [{val:"all",label:"🌍 All"},{val:"africa",label:"🌍 Africa"},{val:"americas",label:"🌎 Americas"},{val:"europe",label:"🇪🇺 Europe"},{val:"middleeast",label:"🕌 Middle East"},{val:"asia",label:"🌏 Asia"},{val:"other",label:"🌐 Global"}];
+        const container = document.getElementById("regionChips");
+        container.innerHTML = regions.map(r => `<span class="chip ${activeRegion === r.val ? 'active' : ''}" data-region="${r.val}">${r.label}</span>`).join("");
+        container.querySelectorAll(".chip").forEach(ch => ch.addEventListener("click", () => { activeRegion = ch.getAttribute("data-region"); buildRegionUI(); renderFeed(); }));
+    }
+    function buildCategoryUI() {
+        const cats = ["all","economy","defence","geopolitics","technology","conflict","health"];
+        const container = document.getElementById("categoryChips");
+        container.innerHTML = cats.map(c => `<span class="chip ${activeCategory === c ? 'active' : ''}" data-cat="${c}">${c === 'all' ? 'All' : c}</span>`).join("");
+        container.querySelectorAll(".chip").forEach(ch => ch.addEventListener("click", () => { activeCategory = ch.getAttribute("data-cat"); buildCategoryUI(); renderFeed(); }));
+    }
+    function buildSortUI() {
+        const sorts = ["date","impact","positive","negative"];
+        const container = document.getElementById("sortChips");
+        container.innerHTML = sorts.map(s => `<span class="chip ${activeSort === s ? 'active' : ''}" data-sort="${s}">${s === 'date' ? 'Latest' : s === 'impact' ? 'Impact' : s === 'positive' ? 'Positive' : 'Negative'}</span>`).join("");
+        container.querySelectorAll(".chip").forEach(ch => ch.addEventListener("click", () => { activeSort = ch.getAttribute("data-sort"); buildSortUI(); renderFeed(); }));
+    }
+
+    // Notification with popup (no "later" option)
+    let popupShown = false;
+    async function requestNotification(showMsg = true) {
+        if (!("Notification" in window)) { if(showMsg) showToast("Push not supported"); return false; }
+        if (Notification.permission === "granted") { if(showMsg) showToast("🔔 Already subscribed"); return true; }
+        if (Notification.permission !== "denied") {
+            const perm = await Notification.requestPermission();
+            if (perm === "granted") { if(showMsg) showToast("✅ Subscribed! Breaking alerts enabled."); if (window._monetag?.push) window._monetag.push.subscribe(); return true; }
+            else { if(showMsg) showToast("Notifications disabled"); return false; }
+        } else { if(showMsg) showToast("Enable notifications in browser settings"); return false; }
+    }
+    function showSubscribePopup() {
+        if (popupShown) return;
+        if (Notification.permission === "granted") return;
+        popupShown = true;
+        const overlay = document.getElementById("subscribePopup");
+        overlay.classList.add("show");
+        document.getElementById("popupAllowBtn").onclick = async () => { overlay.classList.remove("show"); await requestNotification(true); };
+    }
+
+    // Tabs & events
+    document.querySelectorAll("[data-tab]").forEach(tab => {
+        tab.addEventListener("click", () => {
+            const target = tab.getAttribute("data-tab");
+            document.querySelectorAll(".page").forEach(p => p.classList.remove("active-page"));
+            document.getElementById(`${target}Page`).classList.add("active-page");
+            document.querySelectorAll("[data-tab]").forEach(t => t.classList.remove("active"));
+            tab.classList.add("active");
+            if (target === "saved") renderSavedPage(); else renderFeed();
+        });
+    });
+    document.getElementById("pushSubBtn")?.addEventListener("click", () => requestNotification(true));
+    document.getElementById("refreshBtn")?.addEventListener("click", refreshAll);
+    document.getElementById("searchInput")?.addEventListener("input", () => renderFeed());
+
+    buildRegionUI(); buildCategoryUI(); buildSortUI();
+    refreshAll().then(() => setTimeout(showSubscribePopup, 800));
+    setInterval(refreshAll, 10 * 60 * 1000);
+</script>
+</body>
+</html>
